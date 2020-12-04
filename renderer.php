@@ -302,8 +302,6 @@ class format_proa_renderer extends format_section_renderer_base {
         $sectionnavlinks = $this->get_nav_links($course, $modinfo->get_section_info_all(), $displaysection);
         $sectiontitle = '';
         $sectiontitle .= html_writer::start_tag('div', array('class' => 'section-navigation navigationtitle'));
-        $sectiontitle .= html_writer::tag('span', $sectionnavlinks['previous'], array('class' => 'mdl-left'));
-        $sectiontitle .= html_writer::tag('span', $sectionnavlinks['next'], array('class' => 'mdl-right'));
         // Title attributes
         $classes = 'sectionname';
         if (!$thissection->visible) {
