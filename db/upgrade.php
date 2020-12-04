@@ -18,8 +18,9 @@
  * Upgrade scripts for course format "Topics"
  *
  * @package    format_proa
- * @copyright  2017 Marina Glancy
- * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @copyright Willian Mano
+ * @author    Willian mano <willianmano@conecti.me>
+ * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 defined('MOODLE_INTERNAL') || die();

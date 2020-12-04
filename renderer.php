@@ -17,12 +17,11 @@
 /**
  * Renderer for outputting the proa course format.
  *
- * @package format_proa
- * @copyright 2012 Dan Poltawski
- * @license http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
- * @since Moodle 2.3
+ * @package    format_proa
+ * @copyright  Willian Mano
+ * @author     Willian mano <willianmano@conecti.me>
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-
 
 defined('MOODLE_INTERNAL') || die();
 require_once($CFG->dirroot.'/course/format/renderer.php');
@@ -30,8 +29,9 @@ require_once($CFG->dirroot.'/course/format/renderer.php');
 /**
  * Basic renderer for proa format.
  *
- * @copyright 2012 Dan Poltawski
- * @license http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @copyright   Willian Mano
+ * @author      Willian mano <willianmano@conecti.me>
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class format_proa_renderer extends format_section_renderer_base {
 
@@ -218,6 +218,30 @@ class format_proa_renderer extends format_section_renderer_base {
         return $o;
     }
 
+    public function get_courseheader_url($course) {
+        global $CFG;
+
+        $file = format_proa_get_file('courseheader', $course, $course->courseheader);
+
+        if (is_null($file)) {
+            return false;
+        }
+
+        $url = "$CFG->wwwroot/pluginfile.php/" .
+            $file->get_contextid()
+            . "/" .
+            $file->get_component()
+            . "/" .
+            $file->get_filearea()
+            . "/" .
+            $file->get_itemid()
+            . "/" .
+            $file->get_filename()
+            . "?forcedownload=1";
+
+        return $url;
+    }
+
     /**
      * Output the html for a single section page .
      *
@@ -312,6 +336,18 @@ class format_proa_renderer extends format_section_renderer_base {
      * @param array $modnamesused (argument not used)
      */
     public function print_multiple_section_page($course, $sections, $mods, $modnames, $modnamesused) {
+        $courseheader = $this->get_courseheader_url($course);
+
+        echo html_writer::img($courseheader, 'Imagem do curso', ['class' => 'courseheader']);
+
+        echo html_writer::link(new moodle_url('/'), '< menu de cursos', ['class' => 'btn btn-link btn-courseback']);
+
+//        echo html_writer::start_div('coursetitle', ['style' => 'background:url('.$courseheader.')']);
+        echo html_writer::start_div('coursetitle');
+        echo html_writer::tag('h2', $course->fullname);
+        echo html_writer::link(new moodle_url('/'), 'Continuar curso', ['class' => 'btn btn-primary']);
+        echo html_writer::end_div();
+
         $modinfo = get_fast_modinfo($course);
         $course = course_get_format($course)->get_course();
 

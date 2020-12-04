@@ -17,10 +17,10 @@
 /**
  * Proa course format.  Display the whole course as "topics" made of modules.
  *
- * @package format_proa
- * @copyright 2006 The Open University
- * @author N.D.Freear@open.ac.uk, and others.
- * @license http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @package     format_proa
+ * @copyright Willian Mano
+ * @author    Willian mano <willianmano@conecti.me>
+ * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 defined('MOODLE_INTERNAL') || die();

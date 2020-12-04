@@ -17,7 +17,8 @@
  * Privacy Subsystem implementation for format_proa.
  *
  * @package    format_proa
- * @copyright  2018 Carlos Escobedo <carlos@moodle.com>
+ * @copyright  Willian Mano
+ * @author     Willian mano <willianmano@conecti.me>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 namespace format_proa\privacy;
@@ -25,7 +26,8 @@ defined('MOODLE_INTERNAL') || die();
 /**
  * Privacy Subsystem for format_proa implementing null_provider.
  *
- * @copyright  2018 Carlos Escobedo <carlos@moodle.com>
+ * @copyright  Willian Mano
+ * @author     Willian mano <willianmano@conecti.me>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class provider implements \core_privacy\local\metadata\null_provider {

@@ -19,7 +19,8 @@
  * Strings for component 'format_proa', language 'en', branch 'MOODLE_20_STABLE'
  *
  * @package   format_proa
- * @copyright 1999 onwards Martin Dougiamas  {@link http://moodle.com}
+ * @copyright Willian Mano
+ * @author    Willian mano <willianmano@conecti.me>
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -39,4 +40,6 @@ $string['page-course-view-topics'] = 'Any course main page in topics format';
 $string['page-course-view-topics-x'] = 'Any course page in topics format';
 $string['hidefromothers'] = 'Hide topic';
 $string['showfromothers'] = 'Show topic';
+$string['courseheader'] = 'Course header image';
+$string['courseheader_help'] = 'Image displayed at the top of the page.';
 $string['privacy:metadata'] = 'The Topics format plugin does not store any personal data.';

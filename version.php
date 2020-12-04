@@ -18,8 +18,8 @@
  * Version details
  *
  * @package    format
- * @subpackage proa
- * @copyright  1999 onwards Martin Dougiamas (http://dougiamas.com)
+ * @copyright  Willian Mano
+ * @author     Willian mano <willianmano@conecti.me>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 

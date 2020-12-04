@@ -18,7 +18,8 @@
  * format_proa related unit tests
  *
  * @package    format_proa
- * @copyright  2015 Marina Glancy
+ * @copyright  Willian Mano
+ * @author     Willian mano <willianmano@conecti.me>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -31,7 +32,8 @@ require_once($CFG->dirroot . '/course/lib.php');
  * format_proa related unit tests
  *
  * @package    format_proa
- * @copyright  2015 Marina Glancy
+ * @copyright  Willian Mano
+ * @author     Willian mano <willianmano@conecti.me>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class format_proa_testcase extends advanced_testcase {

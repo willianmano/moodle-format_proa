@@ -17,10 +17,10 @@
 /**
  * This file contains main class for the course format Topic
  *
- * @since     Moodle 2.0
- * @package   format_proa
- * @copyright 2009 Sam Hemelryk
- * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @package    format_proa
+ * @copyright  Willian Mano
+ * @author     Willian mano <willianmano@conecti.me>
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 defined('MOODLE_INTERNAL') || die();
@@ -30,7 +30,8 @@ require_once($CFG->dirroot. '/course/format/lib.php');
  * Main class for the Topics course format
  *
  * @package    format_proa
- * @copyright  2012 Marina Glancy
+ * @copyright  Willian Mano
+ * @author     Willian mano <willianmano@conecti.me>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class format_proa extends format_base {
@@ -235,6 +236,17 @@ class format_proa extends format_base {
                     'default' => $courseconfig->coursedisplay,
                     'type' => PARAM_INT,
                 ),
+                'courseheader' => array(
+                    'type' => PARAM_FILE,
+                    'label' => get_string('courseheader', 'format_proa'),
+                    'help' => 'courseheader',
+                    'element_type' => 'filepicker',
+                    'element_attributes' => array(null,
+                        array(
+                            'maxfiles' => 1,
+                            'accepted_types' => array('.jpg', '.png', '.svg')
+                        )),
+                ),
             );
         }
         if ($foreditform && !isset($courseformatoptions['coursedisplay']['label'])) {
@@ -267,6 +279,28 @@ class format_proa extends format_base {
             $courseformatoptions = array_merge_recursive($courseformatoptions, $courseformatoptionsedit);
         }
         return $courseformatoptions;
+    }
+
+    /**
+     * Handle the course format form before saving data and files
+     *
+     * @param array $data
+     * @param array $files
+     * @param array $errors
+     * @return array
+     * @throws dml_exception
+     */
+    public function edit_form_validation($data, $files, $errors) {
+        global $USER;
+
+        $courseid = $data['id'];
+        $context = $courseid != 0 ? \context_course::instance($courseid) : \context_user::instance($USER->id);
+
+        $courseheader = file_get_submitted_draft_itemid('courseheader');
+
+        file_save_draft_area_files($courseheader, $context->id, 'format_proa', 'courseheader', $courseheader);
+
+        return parent::edit_form_validation($data, $files, $errors);
     }
 
     /**
@@ -546,7 +580,7 @@ function format_proa_pluginfile($course, $cm, $context, $filearea, $args, $force
     }
 
     // Recover file and stored_file objects.
-    $file = format_proa_get_file($filearea, $course);
+    $file = format_proa_get_file($filearea, $course, $itemid);
 
     if (is_null($file)) {
         send_file_not_found();
@@ -562,6 +596,10 @@ function format_proa_pluginfile($course, $cm, $context, $filearea, $args, $force
     if ($filearea === 'sectionimage' || strpos($filearea, 'sectionimage') !== false) {
         send_stored_file($storedfile, 86400, $filter, $forcedownload, $options);
     }
+
+    if ($filearea === 'courseheader') {
+        send_stored_file($storedfile, 86400, $filter, $forcedownload, $options);
+    }
 }
 
 /**
@@ -572,19 +610,23 @@ function format_proa_pluginfile($course, $cm, $context, $filearea, $args, $force
  * @return bool|stored_file File object or false if file not exists
  * @throws coding_exception
  */
-function format_proa_get_file($filearea, $course) {
+function format_proa_get_file($filearea, $course, $itemid = 0) {
     global $CFG, $DB;
 
     require_once($CFG->libdir. '/filestorage/file_storage.php');
     require_once($CFG->dirroot. '/course/lib.php');
+
     $fs = get_file_storage();
     $context = context_course::instance($course->id);
-    $files = $fs->get_area_files($context->id, 'format_proa', $filearea, 0, 'filename', false);
+    $files = $fs->get_area_files($context->id, 'format_proa', $filearea, $itemid, 'filename', false);
+
     if (count($files)) {
         foreach ($files as $entry) {
-            $file = $fs->get_file($context->id, 'format_proa', $filearea, 0, $entry->get_filepath(), $entry->get_filename());
+            $file = $fs->get_file($context->id, 'format_proa', $filearea, $itemid, $entry->get_filepath(), $entry->get_filename());
+
             return $file;
         }
     }
+
     return false;
 }

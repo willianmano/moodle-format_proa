@@ -18,8 +18,8 @@
  * Specialised restore for format_proa
  *
  * @package   format_proa
- * @category  backup
- * @copyright 2017 Marina Glancy
+ * @copyright Willian Mano
+ * @author    Willian mano <willianmano@conecti.me>
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -31,8 +31,8 @@ defined('MOODLE_INTERNAL') || die();
  * Processes 'numsections' from the old backup files and hides sections that used to be "orphaned"
  *
  * @package   format_proa
- * @category  backup
- * @copyright 2017 Marina Glancy
+ * @copyright Willian Mano
+ * @author    Willian mano <willianmano@conecti.me>
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class restore_format_proa_plugin extends restore_format_plugin {
