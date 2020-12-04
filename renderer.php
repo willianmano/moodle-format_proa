@@ -338,6 +338,7 @@ class format_proa_renderer extends format_section_renderer_base {
     public function print_multiple_section_page($course, $sections, $mods, $modnames, $modnamesused) {
         $courseheader = $this->get_courseheader_url($course);
 
+        $backpoint = format_proa_get_course_redirect_url($course);
         echo html_writer::img($courseheader, 'Imagem do curso', ['class' => 'courseheader']);
 
         echo html_writer::link(new moodle_url('/'), '< menu de cursos', ['class' => 'btn btn-link btn-courseback']);
@@ -345,7 +346,7 @@ class format_proa_renderer extends format_section_renderer_base {
 //        echo html_writer::start_div('coursetitle', ['style' => 'background:url('.$courseheader.')']);
         echo html_writer::start_div('coursetitle');
         echo html_writer::tag('h2', $course->fullname);
-        echo html_writer::link(new moodle_url('/'), 'Continuar curso', ['class' => 'btn btn-primary']);
+        echo html_writer::link($backpoint, 'Continuar curso', ['class' => 'btn btn-primary']);
         echo html_writer::end_div();
 
         $modinfo = get_fast_modinfo($course);

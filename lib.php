@@ -630,3 +630,66 @@ function format_proa_get_file($filearea, $course, $itemid = 0) {
 
     return false;
 }
+
+function format_proa_get_course_redirect_url($course) {
+    $lastvitedmodule = format_proa_get_last_visited_coursemodule($course);
+
+    if ($lastvitedmodule) {
+        return $lastvitedmodule;
+    }
+
+    return format_proa_get_first_course_activity($course);
+}
+
+function format_proa_get_last_visited_coursemodule($course) {
+    global $USER, $DB;
+
+    $sql = "SELECT id, objecttable, contextinstanceid, courseid
+            FROM {logstore_standard_log}
+            WHERE objecttable <> 'course_modules' AND target = :target AND userid = :userid AND courseid = :courseid
+            ORDER BY id DESC LIMIT 10";
+
+    $params = ['target' => 'course_module', 'userid' => $USER->id, 'courseid' => $course->id];
+
+    $lastvitedmodules = $DB->get_records_sql($sql, $params);
+
+    if (!$lastvitedmodules) {
+        return false;
+    }
+
+    foreach ($lastvitedmodules as $cm) {
+        $coursemodule = get_coursemodule_from_id($cm->objecttable, $cm->contextinstanceid);
+
+        if ($coursemodule && ($coursemodule->deletioninprogress == 0 AND $coursemodule->visible == 1)) {
+            return new moodle_url('/mod/' . $cm->objecttable . '/view.php', ['id' => $cm->contextinstanceid]);
+        }
+    }
+
+    return false;
+}
+
+function format_proa_get_first_course_activity($course) {
+    $sections = course_get_format($course)->get_sections();
+
+    foreach ($sections as $section) {
+        foreach ($section->modinfo->cms as $coursemodule) {
+            if ($coursemodule->deletioninprogress == 1 || $coursemodule->visible == 0) {
+                continue;
+            }
+
+            if ($coursemodule->modname == 'label') {
+                continue;
+            }
+
+            if ($coursemodule->url && $coursemodule->visible) {
+                if ($coursemodule->modname == 'url') {
+                    $coursemodule->url->params(['forceview' => 1]);
+                }
+
+                return $coursemodule->url;
+            }
+        }
+    }
+
+    return new moodle_url('/course/view.php', ['id' => $course->id, 'page' => 'introduction']);
+}
