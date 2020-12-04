@@ -223,8 +223,8 @@ class format_proa_renderer extends format_section_renderer_base {
 
         $file = format_proa_get_file('courseheader', $course, $course->courseheader);
 
-        if (is_null($file)) {
-            return false;
+        if (!$file) {
+            return $CFG->wwwroot . '/course/format/proa/pix/default_courseheader.jpg';
         }
 
         $url = "$CFG->wwwroot/pluginfile.php/" .
@@ -242,6 +242,20 @@ class format_proa_renderer extends format_section_renderer_base {
         return $url;
     }
 
+    public function print_courseheader($course) {
+        $courseheader = $this->get_courseheader_url($course);
+
+        $backpoint = format_proa_get_course_redirect_url($course);
+        echo html_writer::img($courseheader, 'Imagem do curso', ['class' => 'courseheader']);
+
+        echo html_writer::link(new moodle_url('/'), '< menu de cursos', ['class' => 'btn btn-link btn-courseback']);
+
+        echo html_writer::start_div('coursetitle');
+        echo html_writer::tag('h2', $course->fullname);
+        echo html_writer::link($backpoint, 'Continuar curso', ['class' => 'btn btn-primary']);
+        echo html_writer::end_div();
+    }
+
     /**
      * Output the html for a single section page .
      *
@@ -253,6 +267,8 @@ class format_proa_renderer extends format_section_renderer_base {
      * @param int $displaysection The section number in the course which is being displayed
      */
     public function print_single_section_page($course, $sections, $mods, $modnames, $modnamesused, $displaysection) {
+        $this->print_courseheader($course);
+
         $modinfo = get_fast_modinfo($course);
         $course = course_get_format($course)->get_course();
 
@@ -336,18 +352,7 @@ class format_proa_renderer extends format_section_renderer_base {
      * @param array $modnamesused (argument not used)
      */
     public function print_multiple_section_page($course, $sections, $mods, $modnames, $modnamesused) {
-        $courseheader = $this->get_courseheader_url($course);
-
-        $backpoint = format_proa_get_course_redirect_url($course);
-        echo html_writer::img($courseheader, 'Imagem do curso', ['class' => 'courseheader']);
-
-        echo html_writer::link(new moodle_url('/'), '< menu de cursos', ['class' => 'btn btn-link btn-courseback']);
-
-//        echo html_writer::start_div('coursetitle', ['style' => 'background:url('.$courseheader.')']);
-        echo html_writer::start_div('coursetitle');
-        echo html_writer::tag('h2', $course->fullname);
-        echo html_writer::link($backpoint, 'Continuar curso', ['class' => 'btn btn-primary']);
-        echo html_writer::end_div();
+        $this->print_courseheader($course);
 
         $modinfo = get_fast_modinfo($course);
         $course = course_get_format($course)->get_course();
