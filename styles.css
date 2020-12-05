@@ -4,11 +4,11 @@
     position: relative;
 }
 
-#page-course-view-proa .course-content ul.topics li.section:not(#section-0) {
+#page-course-view-proa:not(.editing) .course-content ul.topics li.section:not(#section-0) {
     height: 280px;
 }
 
-#page-course-view-proa .course-content ul.topics li.section.restricted:not(#section-0)::before {
+#page-course-view-proa:not(.editing) .course-content ul.topics li.section.restricted:not(#section-0)::before {
     position: absolute;
     top: 0;
     left: 0;
@@ -18,7 +18,7 @@
     content: "";
 }
 
-#page-course-view-proa .course-content ul.topics li.section.restricted:not(#section-0)::after {
+#page-course-view-proa:not(.editing) .course-content ul.topics li.section.restricted:not(#section-0)::after {
     color: #000;
     position: absolute;
     right: 20px;
@@ -31,7 +31,7 @@
     content: "\f023";
 }
 
-#page-course-view-proa .course-content ul.topics li.section:not(#section-0) .content {
+#page-course-view-proa:not(.editing) .course-content ul.topics li.section:not(#section-0) .content {
     position: absolute;
     bottom: 0;
     left: 0;
@@ -40,7 +40,7 @@
     color: #fff;
 }
 
-#page-course-view-proa .course-content ul.topics li.section:not(#section-0) .content a {
+#page-course-view-proa:not(.editing) .course-content ul.topics li.section:not(#section-0) .content a {
     color: #fff;
     font-weight: 500;
 }
