@@ -446,6 +446,14 @@ class format_proa_renderer extends format_section_renderer_base {
             $classattr .= ' current';
         }
 
+        $sectionavailability = $this->section_availability($section, true);
+
+        if ($sectionavailability != '') {
+            $sectionavailability = html_writer::div($sectionavailability, 'section_availability');
+
+            $classattr .= ' restricted';
+        }
+
         $title = get_section_name($course, $section);
 
         $sectionimage = $this->get_section_image_url($course, $section);
@@ -471,7 +479,7 @@ class format_proa_renderer extends format_section_renderer_base {
         }
         $o .= $this->output->heading($title, 3, 'section-title');
 
-        $o .= $this->section_availability($section);
+        $o .= $sectionavailability;
         $o .= html_writer::start_tag('div', array('class' => 'summarytext'));
 
         $o .= $section->summary;
@@ -482,6 +490,25 @@ class format_proa_renderer extends format_section_renderer_base {
         $o .= html_writer::end_tag('li');
 
         return $o;
+    }
+
+    /**
+     * Displays availability information for the section (hidden, not available unles, etc.)
+     *
+     * @param section_info $section
+     * @return string
+     */
+    public function section_availability($section, $onlymessage = false) {
+        $context = context_course::instance($section->course);
+        $canviewhidden = has_capability('moodle/course:viewhiddensections', $context);
+
+        $availabilitymessage = $this->section_availability_message($section, $canviewhidden);
+
+        if ($onlymessage) {
+            return $availabilitymessage;
+        }
+
+        return html_writer::div($availabilitymessage, 'section_availability');
     }
 
     /**

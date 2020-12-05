@@ -8,6 +8,29 @@
     height: 280px;
 }
 
+#page-course-view-proa .course-content ul.topics li.section.restricted:not(#section-0)::before {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    content: "";
+}
+
+#page-course-view-proa .course-content ul.topics li.section.restricted:not(#section-0)::after {
+    color: #000;
+    position: absolute;
+    right: 20px;
+    top: 10px;
+    font: normal normal normal 14px/1 FontAwesome;
+    font-size: 42px;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    content: "\f023";
+}
+
 #page-course-view-proa .course-content ul.topics li.section:not(#section-0) .content {
     position: absolute;
     bottom: 0;
