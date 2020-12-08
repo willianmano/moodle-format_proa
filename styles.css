@@ -19,7 +19,7 @@
 }
 
 #page-course-view-proa:not(.editing) .course-content ul.topics li.section.restricted:not(#section-0)::after {
-    color: #000;
+    color: #fff;
     position: absolute;
     right: 20px;
     top: 10px;
@@ -85,7 +85,7 @@
 
 #page-course-view-proa .coursetitle h2 {
     font-size: 2.34375rem;
-    color: #1c3480;
+    color: #1c3380;
     font-weight: 500;
 }
 
